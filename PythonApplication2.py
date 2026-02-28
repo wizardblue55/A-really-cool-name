@@ -1,6 +1,7 @@
 import math
 import tkinter as tk
 from tkinter.font import BOLD
+import pygame
 #figuring out importing
 
 root = tk.Tk()
@@ -32,12 +33,8 @@ chatGPT = int(chatGPT)
 print(chatGPT)
 #trying out the math class I imported earlier
 
-
-
 #make a window i hope
-#FUCK YEAH BABY IT WORKS
-
-
+#FUCK YEAH BABY IT WORKS1
 width = root.winfo_screenwidth()
 height = root.winfo_screenheight()
 
