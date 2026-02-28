@@ -46,7 +46,7 @@ root.geometry(f"{width-10}x{height-10}")
 root.config(bg = "lightblue")
 
 
-label = tk.Label(root, text="Click the button?", font=("Comic Sans", 12))
+label = tk.Label(root, text="Click the button?", font=("papyrus", 10, "bold"))
 label.pack(pady=20)
 button = tk.Button(
     root,
