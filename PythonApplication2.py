@@ -1,36 +1,14 @@
-import math
-from sre_constants import JUMP
-import sys
+import os
 import pygame
-import pygame.display
-#figuring out importing
 pygame.init()
-debugging = True
-
-"""
-print("Hello, World!")
-x = 0
-sevenSix = ["Oliver", "Eliot"]
-#basic varibles, trying things i know from java and c#
-while x<100:
-    print(x)
-    print(sevenSix[x % 2])
-    x += 1
-
-print(math.pi)
-cunt = int(input())
-chatGPT = math.sqrt(cunt)
-chatGPT = int(chatGPT)
-print(chatGPT)
-#trying out the math class I imported earlier
-"""
+debugging = False
 
 # Game/Window settings
-WIDTH = 800
-HEIGHT = 800
+WIDTH = 1000
+HEIGHT = 1000
 FPS = 60
 GRAVITY = .05
-
+currentScene = "default"
 #player settings/stats
 
 playerX = WIDTH/2
@@ -40,44 +18,54 @@ playerH = 25
 playerVelX = 0
 playerVelY = 0
 PLAYERTERMVEL = 3
-playerSpeed = 5
+playerSpeed = 1
 playerJumpHeight = 5
 jumping = False
 isGrounded = False
 
+basePath = os.path.dirname(__file__)
+
+egyptPath = os.path.join(basePath, "Textures&Images", "EGYPT.jpg")
+
+bg = pygame.image.load(egyptPath)
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-#pygame.display.set_caption("Dih Destroyer 2: The Suckqul")
-pygame.display.set_caption("Window")
+
+pygame.display.set_caption("ChronoQuest 2: Very Chrono")
 
 clock = pygame.time.Clock()
+
+def changeScene():
+    global currentScene
+    currentScene = "egypt"
+
+screen.fill((29, 220, 224))
 
 running = True
 while running:
 
     keys = pygame.key.get_pressed()
-
-
-    if debugging:
-        print(playerY)
-        print(playerVelY)
-        if(keys[pygame.K_d] or keys[pygame.K_a]):
-            print("Keys are being pressed")
-
     clock.tick(FPS)
-    print()
     for event in pygame.event.get():
         if event.type == pygame.QUIT: #make sure ts is actually running
-            running == False
+            running = False
 
-    
-    
+    if keys[pygame.K_F5]:
+        running = False
+
+    if keys[pygame.K_e]:
+        changeScene()
+
     if keys[pygame.K_a]:
+        playerVelX += playerSpeed
         playerX -= playerVelX
 
     if keys[pygame.K_d]:
+        playerVelX += playerSpeed
         playerX += playerVelX
+    
 
-    if not jumping and [pygame.K_SPACE]:
+    if not jumping and keys[pygame.K_SPACE]:
         playerVelY = playerJumpHeight
         jumping = True
 
@@ -88,7 +76,7 @@ while running:
         playerX = 0
 
     if playerX > WIDTH:
-       playerX = WIDTH
+       playerX = WIDTH-playerW
 
     playerVelY += GRAVITY
     playerY += playerVelY
@@ -99,14 +87,20 @@ while running:
        jumping = False
        GRAVITY = 0
        isGrounded = True
-    screen.fill((29, 220, 224))
+       
+
     if isGrounded:
         playerVelY = 0
 
-    pygame.draw.rect(screen, (16, 32, 16), (playerX, playerY, playerH, playerW))
 
+    if currentScene == "default":
+        screen.fill((29, 220, 224))
+    else: 
+        if currentScene == "egypt":
+            screen.blit(bg, (0, 0))
+
+
+    pygame.draw.rect(screen, (16, 32, 16), (playerX, playerY, playerH, playerW))
     pygame.display.update()
 
 pygame.quit()
-
-
