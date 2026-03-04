@@ -21,16 +21,16 @@ PLAYERTERMVEL = 3
 playerSpeed = 1
 playerJumpHeight = 5
 jumping = False
-isGrounded = False
+isGrounded = True
 
 basePath = os.path.dirname(__file__)
 
 egyptPath = os.path.join(basePath, "Textures&Images", "EGYPT.jpg")
 
-bg = pygame.image.load(egyptPath)
-
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
+bg1 = pygame.image.load(egyptPath)
+bg1 = pygame.transform.scale(bg1, (HEIGHT, WIDTH))
 pygame.display.set_caption("ChronoQuest 2: Very Chrono")
 
 clock = pygame.time.Clock()
@@ -64,11 +64,10 @@ while running:
         playerVelX += playerSpeed
         playerX += playerVelX
     
-
-    if not jumping and keys[pygame.K_SPACE]:
-        playerVelY = playerJumpHeight
+    if not jumping and keys[pygame.K_SPACE] and isGrounded:
+        playerVelY = -playerJumpHeight
         jumping = True
-
+        isGrounded = False
     if playerVelY >= PLAYERTERMVEL:
         playerVelY = PLAYERTERMVEL
 
@@ -86,21 +85,18 @@ while running:
        playerVelY = 0
        jumping = False
        GRAVITY = 0
-       isGrounded = True
        
-
-    if isGrounded:
-        playerVelY = 0
 
 
     if currentScene == "default":
         screen.fill((29, 220, 224))
     else: 
         if currentScene == "egypt":
-            screen.blit(bg, (0, 0))
+            screen.blit(bg1, (0, 0))
 
 
     pygame.draw.rect(screen, (16, 32, 16), (playerX, playerY, playerH, playerW))
+
     pygame.display.update()
 
 pygame.quit()
