@@ -1,6 +1,8 @@
 import os
 import pygame
+import time
 pygame.init()
+
 debugging = False
 
 # Game/Window settings
@@ -26,18 +28,29 @@ isGrounded = True
 basePath = os.path.dirname(__file__)
 
 egyptPath = os.path.join(basePath, "Textures&Images", "EGYPT.jpg")
+scotPath = os.path.join(basePath, "Textures&Images", "Highlands.jpg")
+cityPath = os.path.join(basePath, "Textures&Images", "City.jpg")
+
+def bgResizer(x):
+    x = pygame.transform.scale(x, (HEIGHT, WIDTH))
+    return x
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 bg1 = pygame.image.load(egyptPath)
-bg1 = pygame.transform.scale(bg1, (HEIGHT, WIDTH))
+bg1 = bgResizer(bg1)
+bg2 = pygame.image.load(scotPath)
+bg2 = bgResizer(bg2)
+bg3  = pygame.image.load(cityPath)
+bg3 = bgResizer(bg3)
+
 pygame.display.set_caption("ChronoQuest 2: Very Chrono")
+
+sceneOrder = [bg1, bg2, bg3]
+sceneNum = 0
 
 clock = pygame.time.Clock()
 
-def changeScene():
-    global currentScene
-    currentScene = "egypt"
 
 screen.fill((29, 220, 224))
 
@@ -54,7 +67,11 @@ while running:
         running = False
 
     if keys[pygame.K_e]:
-        changeScene()
+        if sceneNum < len(sceneOrder)-1:
+            sceneNum += 1
+            time.sleep(.5)
+        else:
+            sceneNum = 0
 
     if keys[pygame.K_a]:
         playerVelX += playerSpeed
@@ -86,14 +103,8 @@ while running:
        jumping = False
        GRAVITY = 0
        
-
-
-    if currentScene == "default":
-        screen.fill((29, 220, 224))
-    else: 
-        if currentScene == "egypt":
-            screen.blit(bg1, (0, 0))
-
+    
+    screen.blit(sceneOrder[sceneNum], (0, 0))
 
     pygame.draw.rect(screen, (16, 32, 16), (playerX, playerY, playerH, playerW))
 
