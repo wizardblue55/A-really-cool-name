@@ -8,7 +8,7 @@ debugging = False
 # Game/Window settings
 WIDTH = 1000
 HEIGHT = 1000
-FPS = 60
+FPS = 45
 GRAVITY = .05
 currentScene = "default"
 #player settings/stats
@@ -101,8 +101,8 @@ while running:
        playerY = HEIGHT - playerH
        playerVelY = 0
        jumping = False
-       GRAVITY = 0
-       
+       isGrounded = True
+
     
     screen.blit(sceneOrder[sceneNum], (0, 0))
 
