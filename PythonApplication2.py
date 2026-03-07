@@ -9,7 +9,7 @@ debugging = False
 WIDTH = 1000
 HEIGHT = 1000
 FPS = 60
-GRAVITY = .05
+GRAVITY = .2
 currentScene = "default"
 #player settings/stats
 
@@ -107,7 +107,6 @@ while running:
         jumping = False
         isGrounded = True
 
-    
     screen.blit(sceneOrder[sceneNum], (0, 0))
 
     pygame.draw.rect(screen, (16, 32, 16), (playerX, playerY, playerH, playerW))
