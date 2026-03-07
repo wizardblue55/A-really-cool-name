@@ -8,7 +8,7 @@ debugging = False
 # Game/Window settings
 WIDTH = 1000
 HEIGHT = 1000
-FPS = 45
+FPS = 60
 GRAVITY = .05
 currentScene = "default"
 #player settings/stats
@@ -20,7 +20,7 @@ playerH = 25
 playerVelX = 0
 playerVelY = 0
 PLAYERTERMVEL = 3
-playerSpeed = 1
+playerSpeed = .25
 playerJumpHeight = 5
 jumping = False
 isGrounded = True
@@ -69,7 +69,7 @@ while running:
     if keys[pygame.K_e]:
         if sceneNum < len(sceneOrder)-1:
             sceneNum += 1
-            time.sleep(.5)
+
         else:
             sceneNum = 0
 
@@ -94,14 +94,18 @@ while running:
     if playerX > WIDTH:
        playerX = WIDTH-playerW
 
-    playerVelY += GRAVITY
-    playerY += playerVelY
+    if not isGrounded:
+        playerVelY += GRAVITY
+        if playerVelY > PLAYERTERMVEL:
+            playerVelY = PLAYERTERMVEL
+        playerY += playerVelY
 
-    if playerY >= HEIGHT:
-       playerY = HEIGHT - playerH
-       playerVelY = 0
-       jumping = False
-       isGrounded = True
+
+    if playerY + playerH >= HEIGHT:
+        playerY = HEIGHT - playerH
+        playerVelY = 0
+        jumping = False
+        isGrounded = True
 
     
     screen.blit(sceneOrder[sceneNum], (0, 0))
