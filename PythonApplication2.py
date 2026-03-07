@@ -66,12 +66,12 @@ while running:
     if keys[pygame.K_F5]:
         running = False
 
-    if keys[pygame.K_e]:
-        if sceneNum < len(sceneOrder)-1:
-            sceneNum += 1
-
-        else:
-            sceneNum = 0
+    if keys[pygame.K_1]:
+        sceneNum = 0
+    if keys[pygame.K_2]:
+        sceneNum = 1
+    if keys[pygame.K_3]:
+        sceneNum = 2
 
     if keys[pygame.K_a]:
         playerVelX += playerSpeed
